@@ -35,7 +35,11 @@ function Revive(holder, name, reviver) {
       var length = val.length;
       for (var i = 0; i < length; i++) {
         var newElement = Revive(val, %_NumberToString(i), reviver);
-        val[i] = newElement;
+        if (IS_UNDEFINED(newElement)) {
+          delete val[i];
+        } else {
+          val[i] = newElement;
+        }
       }
     } else {
       for (var p in val) {
